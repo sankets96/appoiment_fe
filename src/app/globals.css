@@ -1,0 +1,95 @@
+/* ═══════════════════════════════════════════════════════════
+   Medicare+ — Global CSS Variables & Base Styles
+   Used across the entire application
+═══════════════════════════════════════════════════════════ */
+
+@import url('https://fonts.googleapis.com/css2?family=Cabinet+Grotesk:wght@400;500;700;800&family=Instrument+Serif:ital@0;1&family=Geist+Mono:wght@400;500&display=swap');
+
+:root {
+  --bg:           #f5f3ef;
+  --surface:      #ffffff;
+  --card:         #fafaf8;
+  --border:       #e8e4dc;
+  --border2:      #d4cfc5;
+  --ink:          #1a1714;
+  --ink2:         #4a4540;
+  --muted:        #8a847a;
+  --sage:         #4a7c59;
+  --sage-light:   #e8f0eb;
+  --sage-mid:     #c5ddc9;
+  --amber:        #c97d2a;
+  --amber-light:  #fdf0e0;
+  --rose:         #c0444a;
+  --rose-light:   #fceaea;
+  --sky:          #2a6896;
+  --sky-light:    #e4eff7;
+  --font-display: 'Instrument Serif', serif;
+  --font-body:    'Cabinet Grotesk', sans-serif;
+  --font-mono:    'Geist Mono', monospace;
+  --radius:       12px;
+  --shadow:       0 1px 3px rgba(0,0,0,.06), 0 4px 12px rgba(0,0,0,.04);
+  --shadow-md:    0 4px 16px rgba(0,0,0,.08), 0 1px 3px rgba(0,0,0,.05);
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: var(--font-body);
+  background: var(--bg);
+  color: var(--ink);
+}
+
+input, select, textarea, button {
+  font-family: var(--font-body);
+}
+
+input, select, textarea {
+  background: var(--surface);
+  border: 1.5px solid var(--border);
+  color: var(--ink);
+  padding: 10px 14px;
+  border-radius: 8px;
+  width: 100%;
+  font-size: 14px;
+  outline: none;
+  transition: border-color .2s, box-shadow .2s;
+}
+
+input:focus, select:focus, textarea:focus {
+  border-color: var(--sage);
+  box-shadow: 0 0 0 3px rgba(74,124,89,.12);
+}
+
+button {
+  cursor: pointer;
+}
+
+select option {
+  background: var(--surface);
+}
+
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: var(--bg); }
+::-webkit-scrollbar-thumb { background: var(--border2); border-radius: 3px; }
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes slideIn {
+  from { opacity: 0; transform: translateX(-12px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+.fade-in {
+  animation: fadeIn .3s ease forwards;
+}
+
+.slide-in {
+  animation: slideIn .25s ease forwards;
+}

@@ -1,0 +1,72 @@
+{
+  "baseUrl": "http://localhost:5000",
+  "endpoints": {
+    "auth": {
+      "login": "/api/auth/login",
+      "register": "/api/auth/register",
+      "logout": "/api/auth/logout",
+      "me": "/api/auth/me",
+      "refresh": "/api/auth/refresh",
+      "forgotPassword": "/api/auth/forgot-password",
+      "resetPassword": "/api/auth/reset-password",
+      "sendOtp": "/api/auth/send-otp",
+      "verifyOtp": "/api/auth/verify-otp"
+    },
+    "doctors": {
+      "list": "/api/doctors",
+      "byId": "/api/doctors/{id}",
+      "bySpecialty": "/api/doctors/specialty/{specialty}",
+      "search": "/api/doctors/search",
+      "availability": "/api/doctors/{id}/availability",
+      "updateAvailability": "/api/doctors/{id}/availability",
+      "updateProfile": "/api/doctors/{id}",
+      "patients": "/api/doctors/{id}/patients"
+    },
+    "patients": {
+      "profile": "/api/patients/{id}",
+      "update": "/api/patients/{id}",
+      "relations": "/api/patients/{id}/relations",
+      "deleteRelation": "/api/patients/{id}/relations/{relationId}"
+    },
+    "appointments": {
+      "list": "/api/appointments",
+      "myAppointments": "/api/appointments/me",
+      "book": "/api/appointments",
+      "byId": "/api/appointments/{id}",
+      "cancel": "/api/appointments/{id}/cancel",
+      "confirm": "/api/appointments/{id}/confirm",
+      "complete": "/api/appointments/{id}/complete"
+    },
+    "prescriptions": {
+      "list": "/api/prescriptions/me",
+      "create": "/api/prescriptions",
+      "byId": "/api/prescriptions/{id}",
+      "byAppointment": "/api/prescriptions/appointment/{appointmentId}",
+      "update": "/api/prescriptions/{id}"
+    },
+    "labs": {
+      "list": "/api/labs/me",
+      "create": "/api/labs",
+      "byId": "/api/labs/{id}",
+      "byPatient": "/api/labs/patient/{patientId}",
+      "update": "/api/labs/{id}"
+    },
+    "admin": {
+      "dashboard": "/api/admin/dashboard",
+      "allDoctors": "/api/admin/doctors",
+      "allPatients": "/api/admin/patients",
+      "allAppointments": "/api/admin/appointments",
+      "verifyRequests": "/api/admin/doctor-requests",
+      "approveDoctor": "/api/admin/doctor-requests/{id}/approve",
+      "rejectDoctor": "/api/admin/doctor-requests/{id}/reject",
+      "suspendDoctor": "/api/admin/doctors/{id}/suspend",
+      "activateDoctor": "/api/admin/doctors/{id}/activate",
+      "deleteUser": "/api/admin/users/{id}"
+    },
+    "notifications": {
+      "list": "/api/notifications",
+      "markRead": "/api/notifications/{id}/read",
+      "markAllRead": "/api/notifications/read-all"
+    }
+  }
+}

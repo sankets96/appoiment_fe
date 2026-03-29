@@ -1,0 +1,178 @@
+/**
+ * Medicare+ — Mock Data Store
+ * Used during development. Replace with real API calls via config.js.
+ *
+ * In Next.js, this runs on the server (if imported in server components).
+ * All user-facing data operations should go through the Zustand store
+ * which handles client-side state.
+ */
+
+export const initStore = {
+  users: [
+    {
+      id: 'u1',
+      email: 'patient@demo.com',
+      password: '1234',
+      role: 'patient',
+      name: 'Arjun Mehta',
+      phone: '9876543210',
+      dob: '1990-05-12',
+      blood: 'B+',
+      gender: 'Male',
+      address: 'Pune, MH',
+      relations: [{ name: 'Priya Mehta', relation: 'Wife', dob: '1993-08-20', blood: 'A+' }],
+    },
+    {
+      id: 'u2',
+      email: 'doctor@demo.com',
+      password: '1234',
+      role: 'doctor',
+      name: 'Dr. Kavya Sharma',
+      phone: '9123456789',
+      specialty: 'Cardiology',
+      license: 'MH-2019-45821',
+      experience: '8 years',
+      verified: true,
+      bio: 'Senior Cardiologist at Apollo Hospital',
+      fee: 800,
+      available: { Mon: ['9:00', '10:00', '11:00'], Wed: ['14:00', '15:00', '16:00'], Fri: ['9:00', '10:00'] },
+    },
+    {
+      id: 'u3',
+      email: 'admin@demo.com',
+      password: '1234',
+      role: 'admin',
+      name: 'Admin Rajan',
+      phone: '9000000001',
+    },
+    {
+      id: 'u4',
+      email: 'drjames@demo.com',
+      password: '1234',
+      role: 'doctor',
+      name: 'Dr. James Okafor',
+      phone: '9234567890',
+      specialty: 'Dermatology',
+      license: 'MH-2020-12345',
+      experience: '5 years',
+      verified: true,
+      bio: 'Expert in skin conditions and cosmetic dermatology',
+      fee: 600,
+      available: { Tue: ['10:00', '11:00'], Thu: ['14:00', '15:00'], Sat: ['9:00', '10:00', '11:00'] },
+    },
+    {
+      id: 'u5',
+      email: 'drpriya@demo.com',
+      password: '1234',
+      role: 'doctor',
+      name: 'Dr. Priya Nair',
+      phone: '9345678901',
+      specialty: 'General Physician',
+      license: 'MH-2021-78901',
+      experience: '3 years',
+      verified: false,
+      bio: 'General medicine and preventive care specialist',
+      fee: 400,
+      available: {},
+    },
+    {
+      id: 'u6',
+      email: 'drrohan@demo.com',
+      password: '1234',
+      role: 'doctor',
+      name: 'Dr. Rohan Desai',
+      phone: '9456789012',
+      specialty: 'Orthopedics',
+      license: 'MH-2018-56789',
+      experience: '10 years',
+      verified: true,
+      bio: 'Orthopedic surgeon specializing in joint replacements',
+      fee: 900,
+      available: { Mon: ['11:00', '14:00'], Wed: ['10:00', '11:00'], Fri: ['14:00', '15:00', '16:00'] },
+    },
+  ],
+
+  appointments: [
+    {
+      id: 'a1',
+      patientId: 'u1',
+      doctorId: 'u2',
+      patientName: 'Arjun Mehta',
+      doctorName: 'Dr. Kavya Sharma',
+      specialty: 'Cardiology',
+      date: '2025-03-10',
+      time: '9:00',
+      status: 'confirmed',
+      reason: 'Chest pain follow-up',
+    },
+    {
+      id: 'a2',
+      patientId: 'u1',
+      doctorId: 'u4',
+      patientName: 'Arjun Mehta',
+      doctorName: 'Dr. James Okafor',
+      specialty: 'Dermatology',
+      date: '2025-03-15',
+      time: '10:00',
+      status: 'pending',
+      reason: 'Skin rash on arm',
+    },
+    {
+      id: 'a3',
+      patientId: 'u1',
+      doctorId: 'u2',
+      patientName: 'Arjun Mehta',
+      doctorName: 'Dr. Kavya Sharma',
+      specialty: 'Cardiology',
+      date: '2025-02-20',
+      time: '11:00',
+      status: 'completed',
+      reason: 'Routine checkup',
+    },
+  ],
+
+  prescriptions: [
+    {
+      id: 'p1',
+      appointmentId: 'a3',
+      patientId: 'u1',
+      doctorId: 'u2',
+      doctorName: 'Dr. Kavya Sharma',
+      date: '2025-02-20',
+      diagnosis: 'Mild hypertension',
+      medicines: [
+        { name: 'Amlodipine', dose: '5mg', freq: 'Once daily', duration: '30 days' },
+        { name: 'Aspirin', dose: '75mg', freq: 'Once daily', duration: '30 days' },
+      ],
+      notes: 'Reduce salt intake. Avoid stress. Follow up in 4 weeks.',
+    },
+  ],
+
+  labReports: [
+    {
+      id: 'l1',
+      patientId: 'u1',
+      doctorId: 'u2',
+      doctorName: 'Dr. Kavya Sharma',
+      date: '2025-02-20',
+      title: 'CBC Report',
+      results: [
+        { test: 'Hemoglobin', value: '13.5 g/dL', normal: '12–17 g/dL', status: 'normal' },
+        { test: 'WBC Count', value: '7800 /μL', normal: '4500–11000 /μL', status: 'normal' },
+        { test: 'Platelets', value: '2.1 L /μL', normal: '1.5–4.0 L /μL', status: 'normal' },
+      ],
+    },
+  ],
+
+  doctorRequests: [
+    {
+      id: 'r1',
+      doctorId: 'u5',
+      doctorName: 'Dr. Priya Nair',
+      specialty: 'General Physician',
+      license: 'MH-2021-78901',
+      date: '2025-03-01',
+      status: 'pending',
+    },
+  ],
+};
