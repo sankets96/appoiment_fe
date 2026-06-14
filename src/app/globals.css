@@ -86,10 +86,944 @@ select option {
   to { opacity: 1; transform: translateX(0); }
 }
 
+@keyframes shrink {
+  from { width: 100%; }
+  to { width: 0%; }
+}
+
 .fade-in {
   animation: fadeIn .3s ease forwards;
 }
 
 .slide-in {
   animation: slideIn .25s ease forwards;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   Auth Pages Responsive - Tablet and Mobile
+══════════════════════════════════════════════════════════ */
+
+/* Tablet (max-width: 1024px) */
+@media (max-width: 1024px) {
+  .auth-layout {
+    grid-template-columns: 1fr !important;
+  }
+
+  .auth-branding-panel {
+    display: none !important;
+  }
+
+  .auth-form-panel {
+    padding: 32px 24px !important;
+    min-height: 100vh;
+  }
+}
+
+/* Mobile (max-width: 640px) */
+@media (max-width: 640px) {
+  .auth-form-panel {
+    padding: 24px 16px !important;
+  }
+}
+
+/* Extra small mobile (max-width: 480px) */
+@media (max-width: 480px) {
+  .auth-form-panel {
+    padding: 16px 12px !important;
+  }
+}
+
+/* ═══════════════════════════════════════════════════════════
+   Toast Responsive Styles
+══════════════════════════════════════════════════════════ */
+
+/* Tablet - adjust toast position */
+@media (max-width: 768px) {
+  .toast-container {
+    right: 16px !important;
+    left: 16px !important;
+    top: 16px !important;
+    min-width: auto !important;
+    max-width: none !important;
+  }
+}
+
+/* Mobile - full width toast */
+@media (max-width: 480px) {
+  .toast-container {
+    right: 12px !important;
+    left: 12px !important;
+    top: 12px !important;
+    border-radius: 12px !important;
+  }
+
+  .toast-container .toast-icon {
+    width: 32px !important;
+    height: 32px !important;
+    font-size: 16px !important;
+  }
+
+  .toast-container .toast-title {
+    font-size: 14px !important;
+  }
+
+  .toast-container .toast-message {
+    font-size: 13px !important;
+  }
+}
+
+/* ═══════════════════════════════════════════════════════════
+   Dashboard Responsive
+══════════════════════════════════════════════════════════ */
+
+/* Tablet (max-width: 1024px) */
+@media (max-width: 1024px) {
+  /* Stats - 2 columns */
+  .patient-stats {
+    grid-template-columns: repeat(2, 1fr) !important;
+  }
+
+  /* Dashboard layout - hide sidebar */
+  .sidebar-container {
+    position: fixed !important;
+    left: -280px !important;
+    top: 0 !important;
+    bottom: 0 !important;
+    width: 260px !important;
+    z-index: 45 !important;
+    transition: left 0.3s ease !important;
+    background: var(--surface) !important;
+  }
+
+  .sidebar-container.sidebar-open {
+    left: 0 !important;
+  }
+
+  .dashboard-main {
+    padding: 24px !important;
+    padding-top: 80px !important;
+  }
+
+  .mobile-menu-btn {
+    display: flex !important;
+  }
+
+  .sidebar-backdrop {
+    display: block !important;
+  }
+}
+
+/* Mobile (max-width: 768px) */
+@media (max-width: 768px) {
+  /* Welcome banner */
+  .patient-welcome {
+    padding: 20px 16px !important;
+    border-radius: 12px !important;
+  }
+
+  /* Stats - single column */
+  .patient-stats {
+    grid-template-columns: 1fr !important;
+    gap: 12px !important;
+  }
+
+  /* Recent appointments */
+  .appointment-item {
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    gap: 8px !important;
+  }
+
+  /* Doctors grid */
+  .doctors-grid {
+    grid-template-columns: 1fr !important;
+    gap: 10px !important;
+  }
+
+  /* Cards */
+  .patient-card {
+    padding: 16px !important;
+  }
+
+  /* Profile Edit Button */
+  .profile-edit-btn {
+    position: relative !important;
+    right: 0 !important;
+    top: 0 !important;
+    margin-top: 16px !important;
+    width: 100% !important;
+    justify-content: center !important;
+    background: rgba(255,255,255,0.2) !important;
+    border: 1.5px solid rgba(255,255,255,0.4) !important;
+    padding: 10px 16px !important;
+    font-size: 14px !important;
+  }
+
+  /* Profile Card Header */
+  .profile-card-header {
+    flex-direction: column !important;
+    align-items: center !important;
+    text-align: center !important;
+    gap: 12px !important;
+  }
+}
+
+/* Mobile (max-width: 480px) */
+@media (max-width: 480px) {
+  /* Dashboard main padding */
+  .dashboard-main {
+    padding: 16px !important;
+    padding-top: 80px !important;
+  }
+
+  /* Welcome banner - stack content */
+  .patient-welcome-content {
+    flex-direction: column !important;
+    gap: 8px !important;
+  }
+
+  /* View all button */
+  .view-all-btn {
+    padding: 4px 10px !important;
+    fontSize: 12px !important;
+  }
+
+  /* Card titles */
+  .card-title {
+    fontSize: 15px !important;
+  }
+
+  /* Stats card */
+  .stat-card {
+    padding: 14px !important;
+    gap: 10px !important;
+  }
+
+  .stat-icon {
+    width: 38px !important;
+    height: 38px !important;
+    fontSize: 16px !important;
+  }
+
+  .stat-value {
+    font-size: 24px !important;
+  }
+
+  .stat-label {
+    fontSize: 11px !important;
+  }
+
+  /* Doctor card */
+  .doctor-card {
+    padding: 10px 12px !important;
+  }
+
+  .doctor-avatar {
+    width: 32px !important;
+    height: 32px !important;
+  }
+}
+
+/* ═══════════════════════════════════════════════════════════
+   Doctor Profile Page Responsive
+══════════════════════════════════════════════════════════ */
+
+/* Tablet and below */
+@media (max-width: 768px) {
+  .doctor-profile-page {
+    padding: 0 16px !important;
+  }
+
+  .doctor-profile-header {
+    flex-direction: column !important;
+    text-align: center !important;
+    gap: 16 !important;
+  }
+
+  .doctor-profile-header button {
+    position: static !important;
+    margin-top: 16px !important;
+  }
+}
+
+/* Mobile */
+@media (max-width: 480px) {
+  .doctor-profile-page {
+    padding: 0 12px !important;
+  }
+
+  .doctor-profile-header-avatar {
+    width: 80px !important;
+    height: 80px !important;
+  }
+
+  .doctor-profile-header-name {
+    font-size: 20px !important;
+  }
+
+  .doctor-profile-header-specialty {
+    font-size: 13px !important;
+  }
+
+  .doctor-profile-content {
+    padding: 20px 16px !important;
+  }
+
+  .doctor-profile-section-title {
+    font-size: 14px !important;
+  }
+
+  .doctor-profile-field-label {
+    font-size: 11px !important;
+  }
+
+  .doctor-profile-field-value {
+    font-size: 14px !important;
+  }
+
+  .doctor-profile-actions {
+    flex-direction: column !important;
+    gap: 10px !important;
+  }
+
+  .doctor-profile-actions button {
+    width: 100% !important;
+  }
+
+  .quick-summary-grid {
+    grid-template-columns: 1fr !important;
+    gap: 16px !important;
+  }
+}
+
+/* ═══════════════════════════════════════════════════════════
+   Patient Profile Avatar — hover overlay & drag-over
+═══════════════════════════════════════════════════════════ */
+
+.patient-avatar-wrap {
+  transition: transform 0.18s ease, box-shadow 0.18s ease;
+}
+
+.patient-avatar-wrap:hover:not(:disabled) {
+  transform: scale(1.04);
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.22) !important;
+}
+
+.patient-avatar-wrap--over {
+  outline: 3px solid var(--sage);
+  outline-offset: 3px;
+  transform: scale(1.04);
+}
+
+.patient-avatar-overlay {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: linear-gradient(135deg, rgba(74, 124, 89, 0.75) 0%, rgba(42, 60, 48, 0.85) 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  opacity: 0;
+  transition: opacity 0.18s ease;
+  pointer-events: none;
+}
+
+.patient-avatar-wrap:hover .patient-avatar-overlay,
+.patient-avatar-wrap--over .patient-avatar-overlay {
+  opacity: 1;
+}
+
+.patient-avatar-badge {
+  transition: transform 0.18s ease;
+}
+
+.patient-avatar-wrap:hover .patient-avatar-badge {
+  transform: scale(1.08);
+}
+
+/* Mobile: show the overlay always (no hover on touch) */
+@media (hover: none) {
+  .patient-avatar-overlay {
+    opacity: 0.55;
+  }
+}
+
+/* Doctor profile uses the same overlay/hover/remove pattern. The doctor
+   header has a darker background, so the overlay color is tuned to match. */
+.doctor-avatar-wrap {
+  transition: transform 0.18s ease, box-shadow 0.18s ease;
+}
+
+.doctor-avatar-wrap:hover {
+  transform: scale(1.04);
+  box-shadow: 0 12px 36px rgba(0, 0, 0, 0.28) !important;
+}
+
+.doctor-avatar-wrap--over {
+  outline: 3px solid var(--sage);
+  outline-offset: 3px;
+  transform: scale(1.04);
+}
+
+.doctor-avatar-overlay {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: linear-gradient(135deg, rgba(0, 0, 0, 0.45) 0%, rgba(0, 0, 0, 0.65) 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  opacity: 0;
+  transition: opacity 0.18s ease;
+  pointer-events: none;
+}
+
+.doctor-avatar-wrap:hover .doctor-avatar-overlay,
+.doctor-avatar-wrap--over .doctor-avatar-overlay {
+  opacity: 1;
+}
+
+.doctor-avatar-remove {
+  position: absolute;
+  top: -2px;
+  right: -2px;
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  background: rgba(220, 38, 38, 0.95);
+  border: 2px solid #fff;
+  color: #fff;
+  font-size: 12px;
+  font-weight: 700;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  line-height: 1;
+  z-index: 2;
+  transition: transform 0.18s ease, background 0.18s ease;
+}
+
+.doctor-avatar-remove:hover {
+  background: #dc2626;
+  transform: scale(1.1);
+}
+
+@media (hover: none) {
+  .doctor-avatar-overlay {
+    opacity: 0.5;
+  }
+}
+
+/* ═══════════════════════════════════════════════════════════
+   Profile Photo Editor Modal
+   Reusable avatar-crop modal used by patient & doctor profiles.
+═══════════════════════════════════════════════════════════ */
+
+.ppe-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(20, 18, 14, 0.55);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  z-index: 1100;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  animation: fadeIn 0.18s ease forwards;
+}
+
+.ppe-modal {
+  background: var(--surface);
+  border-radius: 20px;
+  width: 100%;
+  max-width: 480px;
+  max-height: 92vh;
+  overflow-y: auto;
+  box-shadow:
+    0 24px 80px rgba(0, 0, 0, 0.22),
+    0 0 0 1px rgba(0, 0, 0, 0.04);
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding: 22px 24px 24px;
+  animation: fadeIn 0.22s ease forwards;
+}
+
+/* Header */
+.ppe-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-bottom: 14px;
+  border-bottom: 1.5px solid var(--border);
+}
+
+.ppe-title {
+  font-family: var(--font-display);
+  font-size: 22px;
+  font-style: italic;
+  color: var(--ink);
+  font-weight: 600;
+}
+
+.ppe-close {
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
+  background: transparent;
+  border: 1.5px solid var(--border);
+  color: var(--ink2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.18s;
+}
+
+.ppe-close:hover:not(:disabled) {
+  background: var(--rose-light);
+  color: var(--rose);
+  border-color: var(--rose);
+}
+
+.ppe-close:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+/* Stage */
+.ppe-stage-wrap {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+}
+
+.ppe-stage {
+  position: relative;
+  width: 320px;
+  height: 320px;
+  max-width: 100%;
+  border-radius: 50%;
+  background:
+    radial-gradient(circle at 30% 25%, rgba(74, 124, 89, 0.05) 0%, transparent 60%),
+    var(--card);
+  border: 2px dashed var(--border2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  transition: border-color 0.18s, background 0.18s, box-shadow 0.18s;
+  cursor: pointer;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+.ppe-stage--loaded {
+  border-style: solid;
+  border-color: var(--border);
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.5);
+  cursor: default;
+}
+
+.ppe-stage--over {
+  border-color: var(--sage);
+  background:
+    radial-gradient(circle at 30% 25%, rgba(74, 124, 89, 0.12) 0%, transparent 60%),
+    var(--sage-light);
+}
+
+.ppe-mask {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.ppe-canvas {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  touch-action: none; /* let pointer events drive panning */
+}
+
+.ppe-img-wrap {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform-origin: center center;
+  pointer-events: none; /* the parent .ppe-canvas handles drags */
+  will-change: transform;
+}
+
+.ppe-img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  -webkit-user-drag: none;
+  user-select: none;
+  pointer-events: none;
+}
+
+/* Empty state */
+.ppe-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 24px;
+  color: var(--ink2);
+  gap: 6px;
+  pointer-events: auto;
+}
+
+.ppe-empty-icon {
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+  background: var(--sage-light);
+  color: var(--sage);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 8px;
+  border: 2px dashed var(--sage);
+}
+
+.ppe-empty-title {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: 20px;
+  color: var(--ink);
+  margin-bottom: 2px;
+}
+
+.ppe-empty-sub {
+  font-size: 13px;
+  color: var(--muted);
+  margin-bottom: 12px;
+}
+
+.ppe-empty-btn {
+  background: var(--sage);
+  color: #fff;
+  border: none;
+  padding: 10px 22px;
+  border-radius: 10px;
+  font-weight: 700;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.18s;
+  box-shadow: 0 4px 12px rgba(74, 124, 89, 0.25);
+}
+
+.ppe-empty-btn:hover {
+  filter: brightness(1.08);
+  transform: translateY(-1px);
+  box-shadow: 0 6px 16px rgba(74, 124, 89, 0.32);
+}
+
+.ppe-empty-btn:active {
+  transform: translateY(0);
+}
+
+.ppe-empty-hint {
+  margin-top: 12px;
+  font-size: 11px;
+  color: var(--muted);
+  letter-spacing: 0.3px;
+}
+
+/* Toolbar */
+.ppe-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 10px 14px;
+  background: var(--card);
+  border: 1.5px solid var(--border);
+  border-radius: 14px;
+  flex-wrap: wrap;
+}
+
+.ppe-iconbtn {
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+  background: var(--surface);
+  border: 1.5px solid var(--border);
+  color: var(--ink2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.18s;
+  flex-shrink: 0;
+}
+
+.ppe-iconbtn:hover:not(:disabled) {
+  background: var(--sage-light);
+  color: var(--sage);
+  border-color: var(--sage);
+  transform: translateY(-1px);
+}
+
+.ppe-iconbtn:active:not(:disabled) {
+  transform: translateY(0);
+}
+
+.ppe-iconbtn:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+}
+
+.ppe-toolbar-divider {
+  width: 1px;
+  height: 24px;
+  background: var(--border);
+  margin: 0 2px;
+}
+
+.ppe-zoom-wrap {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex: 1;
+  min-width: 140px;
+  max-width: 220px;
+}
+
+.ppe-zoom {
+  -webkit-appearance: none;
+  appearance: none;
+  flex: 1;
+  height: 4px;
+  background: var(--border);
+  border-radius: 2px;
+  outline: none;
+  cursor: pointer;
+  margin: 0;
+  padding: 0;
+}
+
+.ppe-zoom::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: var(--sage);
+  border: 2px solid #fff;
+  box-shadow: 0 2px 6px rgba(74, 124, 89, 0.35);
+  cursor: grab;
+  transition: transform 0.15s;
+}
+
+.ppe-zoom::-webkit-slider-thumb:hover {
+  transform: scale(1.1);
+}
+
+.ppe-zoom::-webkit-slider-thumb:active {
+  cursor: grabbing;
+  transform: scale(1.15);
+}
+
+.ppe-zoom::-moz-range-thumb {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: var(--sage);
+  border: 2px solid #fff;
+  box-shadow: 0 2px 6px rgba(74, 124, 89, 0.35);
+  cursor: grab;
+}
+
+.ppe-zoom-readout {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--ink2);
+  min-width: 38px;
+  text-align: right;
+}
+
+/* Footer */
+.ppe-footer {
+  display: flex;
+  gap: 10px;
+  padding-top: 6px;
+  border-top: 1.5px solid var(--border);
+  padding-top: 16px;
+  margin-top: 4px;
+}
+
+.ppe-btn {
+  flex: 1;
+  padding: 12px 20px;
+  border-radius: 12px;
+  font-weight: 700;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.18s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.ppe-btn:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+.ppe-btn--primary {
+  background: var(--sage);
+  color: #fff;
+  border: none;
+  box-shadow: 0 4px 14px rgba(74, 124, 89, 0.28);
+}
+
+.ppe-btn--primary:hover:not(:disabled) {
+  filter: brightness(1.08);
+  transform: translateY(-1px);
+  box-shadow: 0 6px 20px rgba(74, 124, 89, 0.36);
+}
+
+.ppe-btn--primary:active:not(:disabled) {
+  transform: translateY(0);
+}
+
+.ppe-btn--ghost {
+  background: transparent;
+  color: var(--ink2);
+  border: 1.5px solid var(--border);
+  flex: 0 0 auto;
+  min-width: 110px;
+}
+
+.ppe-btn--ghost:hover:not(:disabled) {
+  background: var(--card);
+  border-color: var(--border2);
+}
+
+/* Spinner inside Save button */
+.ppe-spinner {
+  display: inline-block;
+  width: 14px;
+  height: 14px;
+  border: 2px solid rgba(255, 255, 255, 0.35);
+  border-top-color: #fff;
+  border-radius: 50%;
+  animation: ppe-spin 0.7s linear infinite;
+}
+
+@keyframes ppe-spin {
+  to { transform: rotate(360deg); }
+}
+
+/* ── Responsive: Profile Photo Editor ─────────────────────── */
+
+/* Tablet */
+@media (max-width: 1024px) {
+  .ppe-modal {
+    max-width: 460px;
+  }
+}
+
+/* Mobile (≤ 640px) */
+@media (max-width: 640px) {
+  .ppe-backdrop {
+    padding: 14px;
+    align-items: flex-end;
+  }
+
+  .ppe-modal {
+    max-width: 100%;
+    border-radius: 20px 20px 0 0;
+    max-height: 95vh;
+    padding: 18px 18px 22px;
+  }
+
+  .ppe-stage {
+    width: 260px;
+    height: 260px;
+  }
+
+  .ppe-title {
+    font-size: 19px;
+  }
+
+  .ppe-zoom-wrap {
+    min-width: 110px;
+  }
+}
+
+/* Small mobile (≤ 480px) */
+@media (max-width: 480px) {
+  .ppe-backdrop {
+    padding: 10px;
+  }
+
+  .ppe-modal {
+    padding: 16px 14px 18px;
+    gap: 16px;
+  }
+
+  .ppe-stage {
+    width: 220px;
+    height: 220px;
+  }
+
+  .ppe-toolbar {
+    padding: 8px 10px;
+    gap: 6px;
+  }
+
+  .ppe-iconbtn {
+    width: 36px;
+    height: 36px;
+  }
+
+  .ppe-zoom-wrap {
+    order: 5;
+    flex-basis: 100%;
+    max-width: 100%;
+    min-width: 0;
+  }
+
+  .ppe-toolbar-divider {
+    display: none;
+  }
+
+  .ppe-empty-icon {
+    width: 60px;
+    height: 60px;
+  }
+
+  .ppe-empty-title {
+    font-size: 17px;
+  }
+
+  .ppe-footer {
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .ppe-btn--ghost {
+    width: 100%;
+    min-width: 0;
+  }
 }

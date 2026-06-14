@@ -1,4 +1,5 @@
 import './globals.css';
+import { ToastProvider } from '@/components/ui';
 
 export const metadata = {
   title: 'Medicare+ | Healthcare Appointment Platform',
@@ -11,7 +12,11 @@ export default function RootLayout({ children }) {
       <head>
         <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
       </head>
-      <body>{children}</body>
+      <body>
+        <ToastProvider>
+          {children}
+        </ToastProvider>
+      </body>
     </html>
   );
 }

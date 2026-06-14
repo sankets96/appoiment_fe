@@ -217,26 +217,24 @@ export default function OtpPage() {
     setLoading(true);
     try {
       // ── REAL API ──────────────────────────────────────────
-      // const res = await apiPost(authEndpoints.verifyOtp(), {
-      //   email,
-      //   code: otp.trim(),
-      // });
-      // setToken(res.token);
-      // login(res.user);
-      // router.push(`/${res.user.role}`);
-      // ─────────────────────────────────────────────────────
+      const res = await apiPost(authEndpoints.verifyOtp(), {
+        email,
+        code: otp.trim(),
+      });
 
-      // Mock verification (accept any 6-digit code for demo)
-      await new Promise((r) => setTimeout(r, 800));
-      const u = users.find((u) => u.id === userId);
-      if (!u) throw new Error('User not found.');
-
-      if (role === 'doctor') {
-        router.push(`/auth/success?role=doctor`);
-      } else {
-        login(u);
-        router.push(`/patient`);
+      // Check if doctor registration - show pending message
+      if (res.pendingApproval) {
+        setLoading(false);
+        // Show success message and redirect to login
+        router.push(`/auth/success?role=doctor&message=${encodeURIComponent(res.message)}`);
+        return;
       }
+
+      // Normal login for patient/admin
+      setToken(res.token);
+      login(res.user, res.token);
+      router.push(`/${res.user.role}`);
+      // ─────────────────────────────────────────────────────
     } catch (e) {
       setErr(e.message);
     } finally {
@@ -298,40 +296,6 @@ export default function OtpPage() {
             Enter 6-Digit OTP
           </div>
           <OtpBoxes value={otp} onChange={setOtp} disabled={loading} />
-        </div>
-
-        {/* API payload preview */}
-        <div
-          style={{
-            background: '#1e1e2e',
-            borderRadius: 10,
-            padding: '14px 16px',
-            border: '1px solid #313149',
-          }}
-        >
-          <div
-            style={{
-              fontSize: 10,
-              fontWeight: 700,
-              letterSpacing: 1,
-              color: '#6c6c8a',
-              marginBottom: 8,
-              textTransform: 'uppercase',
-            }}
-          >
-            API Payload → POST /api/auth/verify-otp
-          </div>
-          <pre
-            style={{
-              fontFamily: 'var(--font-mono)',
-              fontSize: 13,
-              color: '#a6e3a1',
-              margin: 0,
-              lineHeight: 1.7,
-            }}
-          >
-            {JSON.stringify({ email, code: otp.padEnd(6, '_').slice(0, 6) }, null, 2)}
-          </pre>
         </div>
 
         {err && (
