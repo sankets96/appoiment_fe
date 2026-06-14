@@ -33,13 +33,34 @@ const replaceParams = (url, params = {}) => {
 export const authEndpoints = {
   login: () => `${BASE_URL}${apiConfig.endpoints.auth.login}`,
   register: () => `${BASE_URL}${apiConfig.endpoints.auth.register}`,
+  registerOtp: () => `${BASE_URL}${apiConfig.endpoints.auth.registerOtp}`,
   logout: () => `${BASE_URL}${apiConfig.endpoints.auth.logout}`,
   me: () => `${BASE_URL}${apiConfig.endpoints.auth.me}`,
   refresh: () => `${BASE_URL}${apiConfig.endpoints.auth.refresh}`,
   forgotPassword: () => `${BASE_URL}${apiConfig.endpoints.auth.forgotPassword}`,
+  forgotPasswordOtp: () => `${BASE_URL}${apiConfig.endpoints.auth.forgotPasswordOtp}`,
+  verifyForgotPasswordOtp: () => `${BASE_URL}${apiConfig.endpoints.auth.verifyForgotPasswordOtp}`,
   resetPassword: () => `${BASE_URL}${apiConfig.endpoints.auth.resetPassword}`,
   sendOtp: () => `${BASE_URL}${apiConfig.endpoints.auth.sendOtp}`,
   verifyOtp: () => `${BASE_URL}${apiConfig.endpoints.auth.verifyOtp}`,
+};
+
+// ── User Endpoints ──────────────────────────────────────────
+export const userEndpoints = {
+  profile: (params) => `${BASE_URL}${replaceParams(apiConfig.endpoints.users.profile, params)}`,
+  updateProfile: (params) =>
+    `${BASE_URL}${replaceParams(apiConfig.endpoints.users.updateProfile, params)}`,
+  uploadPhoto: (params) => `${BASE_URL}${replaceParams(apiConfig.endpoints.users.profile, params)}/photo`,
+  deletePhoto: (params) => `${BASE_URL}${replaceParams(apiConfig.endpoints.users.profile, params)}/photo`,
+  doctorRequests: () => `${BASE_URL}${apiConfig.endpoints.users.doctorRequests}`,
+  approveDoctor: (params) =>
+    `${BASE_URL}${replaceParams(apiConfig.endpoints.users.approveDoctor, params)}`,
+  rejectDoctor: (params) =>
+    `${BASE_URL}${replaceParams(apiConfig.endpoints.users.rejectDoctor, params)}`,
+  getAllDoctors: () => `${BASE_URL}${apiConfig.endpoints.users.getAllDoctors}`,
+  doctorAvailability: (params) =>
+    `${BASE_URL}${replaceParams(apiConfig.endpoints.users.doctorAvailability, params)}`,
+  bookAppointment: () => `${BASE_URL}${apiConfig.endpoints.users.bookAppointment}`,
 };
 
 // ── Doctor Endpoints ────────────────────────────────────────
@@ -55,6 +76,8 @@ export const doctorEndpoints = {
     `${BASE_URL}${replaceParams(apiConfig.endpoints.doctors.updateAvailability, params)}`,
   updateProfile: (params) =>
     `${BASE_URL}${replaceParams(apiConfig.endpoints.doctors.updateProfile, params)}`,
+  updateStatus: (params) =>
+    `${BASE_URL}${replaceParams(apiConfig.endpoints.doctors.updateStatus, params)}`,
   patients: (params) => `${BASE_URL}${replaceParams(apiConfig.endpoints.doctors.patients, params)}`,
 };
 
@@ -123,6 +146,15 @@ export const adminEndpoints = {
     `${BASE_URL}${replaceParams(apiConfig.endpoints.admin.deleteUser, params)}`,
 };
 
+// ── Family Member Endpoints ──────────────────────────────────
+export const familyMemberEndpoints = {
+  list: () => `${BASE_URL}${apiConfig.endpoints.familyMembers.list}`,
+  add: () => `${BASE_URL}${apiConfig.endpoints.familyMembers.add}`,
+  byId: (params) => `${BASE_URL}${replaceParams(apiConfig.endpoints.familyMembers.byId, params)}`,
+  update: (params) => `${BASE_URL}${replaceParams(apiConfig.endpoints.familyMembers.update, params)}`,
+  delete: () => `${BASE_URL}${apiConfig.endpoints.familyMembers.delete}`,
+};
+
 // ── Notification Endpoints ──────────────────────────────────
 export const notificationEndpoints = {
   list: () => `${BASE_URL}${apiConfig.endpoints.notifications.list}`,
@@ -157,3 +189,21 @@ export const apiPut = (url, body) =>
 export const apiPatch = (url, body = {}) =>
   apiFetch(url, { method: 'PATCH', body: JSON.stringify(body) });
 export const apiDel = (url) => apiFetch(url, { method: 'DELETE' });
+
+// File upload with FormData (no JSON.stringify)
+export const apiPostFormData = async (url, formData) => {
+  const headers = {
+    Authorization: `Bearer ${getToken()}`,
+    // Don't set Content-Type - browser will set it with boundary automatically
+  };
+  const res = await fetch(url, {
+    method: 'POST',
+    headers,
+    body: formData,
+  });
+  if (!res.ok) {
+    const err = await res.json().catch(() => ({ message: 'Request failed' }));
+    throw new Error(err.message || `HTTP ${res.status}`);
+  }
+  return res.json();
+};

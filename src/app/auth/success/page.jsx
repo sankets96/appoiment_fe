@@ -6,6 +6,7 @@ import Link from 'next/link';
 export default function SuccessPage() {
   const searchParams = useSearchParams();
   const role = searchParams.get('role') || 'patient';
+  const message = searchParams.get('message') || '';
 
   return (
     <div
@@ -21,7 +22,9 @@ export default function SuccessPage() {
         className="fade-in"
         style={{ textAlign: 'center', maxWidth: 400, padding: 40 }}
       >
-        <div style={{ fontSize: 72, marginBottom: 20 }}>🎉</div>
+        <div style={{ fontSize: 72, marginBottom: 20 }}>
+          {role === 'doctor' ? '⏳' : '🎉'}
+        </div>
         <div
           style={{
             fontFamily: 'var(--font-display)',
@@ -40,9 +43,9 @@ export default function SuccessPage() {
             marginBottom: 32,
           }}
         >
-          {role === 'doctor'
+          {message || (role === 'doctor'
             ? 'Your registration is under review. Admin will verify your credentials before you can log in.'
-            : 'Your email has been verified. You can now sign in.'}
+            : 'Your email has been verified. You can now sign in.')}
         </div>
         <Link
           href="/auth/login"

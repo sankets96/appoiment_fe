@@ -20,7 +20,7 @@ export const initStore = {
       blood: 'B+',
       gender: 'Male',
       address: 'Pune, MH',
-      relations: [{ name: 'Priya Mehta', relation: 'Wife', dob: '1993-08-20', blood: 'A+' }],
+      relations: [{ name: 'Priya Mehta', relation: 'Wife', dob: '1993-08-20', blood: 'A+', gender: 'Female', status: true }],
     },
     {
       id: 'u2',

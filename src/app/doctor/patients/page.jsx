@@ -1,12 +1,15 @@
 'use client';
 
 import { useState } from 'react';
-import { Badge, Card, Avatar, Field, Modal } from '@/components/ui';
+import { Badge, Card, Avatar, Field, Modal, Btn, useToast, IconButton, BinIcon } from '@/components/ui';
 import { useAppStore } from '@/lib/store-client';
 
 export default function DoctorPatientsPage() {
-  const { user, getDoctorAppointments, addPrescription, addLabReport, completeAppointment } =
+  const { user, getDoctorAppointments, addPrescription, addLabReport, completeAppointment, updateAppointment, updateAppointmentStatus } =
     useAppStore();
+  const appts = getDoctorAppointments(user?.id);
+  const toast = useToast();
+
   const [selected, setSelected] = useState(null);
   const [prescModal, setPrescModal] = useState(false);
   const [labModal, setLabModal] = useState(false);
@@ -17,7 +20,14 @@ export default function DoctorPatientsPage() {
   });
   const [lab, setLab] = useState({ title: '', results: [{ test: '', value: '', normal: '', status: 'normal' }] });
 
-  const appts = getDoctorAppointments(user?.id);
+  // Edit consultation state
+  const [showEdit, setShowEdit] = useState(false);
+  const [editForm, setEditForm] = useState({ reason: '', status: '' });
+  const [editErrors, setEditErrors] = useState({});
+
+  // Delete confirmation state
+  const [deleteConfirm, setDeleteConfirm] = useState(null);
+  const [saving, setSaving] = useState(false);
 
   const savePresc = () => {
     addPrescription({
@@ -47,6 +57,33 @@ export default function DoctorPatientsPage() {
     setLab({ title: '', results: [{ test: '', value: '', normal: '', status: 'normal' }] });
   };
 
+  const openEdit = (a) => {
+    setSelected(a);
+    setEditForm({ reason: a.reason || '', status: a.status || 'pending' });
+    setEditErrors({});
+    setShowEdit(true);
+  };
+
+  const handleEdit = () => {
+    const e = {};
+    if (!editForm.status) e.status = 'Status is required';
+    setEditErrors(e);
+    if (Object.keys(e).length > 0) return;
+    setSaving(true);
+    updateAppointment(selected.id, { reason: editForm.reason, status: editForm.status });
+    setSaving(false);
+    setShowEdit(false);
+    toast?.showToast('Consultation updated', 'success', 'Updated');
+  };
+
+  const handleDelete = () => {
+    setSaving(true);
+    updateAppointmentStatus(appts[deleteConfirm].id, 'cancelled');
+    setSaving(false);
+    setDeleteConfirm(null);
+    toast?.showToast('Consultation cancelled', 'success', 'Cancelled');
+  };
+
   return (
     <div className="fade-in" style={{ display: 'flex', flexDirection: 'column', gap: 20 }}>
       <div style={{ fontFamily: 'var(--font-display)', fontSize: 24, fontStyle: 'italic' }}>
@@ -64,7 +101,7 @@ export default function DoctorPatientsPage() {
           </div>
         </Card>
       ) : (
-        appts.map((a) => (
+        appts.map((a, i) => (
           <Card key={a.id}>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
               <div style={{ display: 'flex', gap: 14, alignItems: 'center' }}>
@@ -83,51 +120,99 @@ export default function DoctorPatientsPage() {
               </div>
               <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', gap: 8 }}>
                 <Badge text={a.status} />
-                {(a.status === 'confirmed' || a.status === 'pending') && (
-                  <div style={{ display: 'flex', gap: 8 }}>
-                    <button
-                      onClick={() => {
-                        setSelected(a);
-                        setPrescModal(true);
-                      }}
-                      style={{
-                        padding: '6px 12px',
-                        borderRadius: 8,
-                        border: '1.5px solid var(--sage)',
-                        background: 'transparent',
-                        color: 'var(--sage)',
-                        fontSize: 13,
-                        fontWeight: 600,
-                        cursor: 'pointer',
-                      }}
-                    >
-                      + Prescription
-                    </button>
-                    <button
-                      onClick={() => {
-                        setSelected(a);
-                        setLabModal(true);
-                      }}
-                      style={{
-                        padding: '6px 12px',
-                        borderRadius: 8,
-                        border: '1.5px solid var(--border)',
-                        background: 'transparent',
-                        color: 'var(--ink2)',
-                        fontSize: 13,
-                        fontWeight: 600,
-                        cursor: 'pointer',
-                      }}
-                    >
-                      + Lab Report
-                    </button>
-                  </div>
-                )}
+                <div style={{ display: 'flex', gap: 8 }}>
+                  {(a.status === 'confirmed' || a.status === 'pending') && (
+                    <>
+                      <button
+                        onClick={() => { setSelected(a); setPrescModal(true); }}
+                        style={{
+                          padding: '6px 12px', borderRadius: 8, border: '1.5px solid var(--sage)',
+                          background: 'transparent', color: 'var(--sage)', fontSize: 13, fontWeight: 600, cursor: 'pointer',
+                        }}
+                      >
+                        + Prescription
+                      </button>
+                      <button
+                        onClick={() => { setSelected(a); setLabModal(true); }}
+                        style={{
+                          padding: '6px 12px', borderRadius: 8, border: '1.5px solid var(--border)',
+                          background: 'transparent', color: 'var(--ink2)', fontSize: 13, fontWeight: 600, cursor: 'pointer',
+                        }}
+                      >
+                        + Lab Report
+                      </button>
+                    </>
+                  )}
+                  <IconButton variant="edit" onClick={() => openEdit(a)} title="Edit consultation" />
+                  {a.status !== 'cancelled' && a.status !== 'completed' && (
+                    <IconButton variant="delete" onClick={() => setDeleteConfirm(i)} title="Cancel consultation" />
+                  )}
+                </div>
               </div>
             </div>
           </Card>
         ))
       )}
+
+      {/* Edit Consultation Modal */}
+      <Modal open={showEdit} onClose={() => { setShowEdit(false); setEditErrors({}); }} title="Edit Consultation" width={480}>
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
+          <Field label="Reason">
+            <input
+              type="text"
+              value={editForm.reason}
+              onChange={(e) => setEditForm((f) => ({ ...f, reason: e.target.value }))}
+              placeholder="Reason for visit"
+              style={{
+                width: '100%', padding: '10px 12px', borderRadius: 8,
+                border: '1.5px solid var(--border)', fontSize: 14, outline: 'none',
+              }}
+            />
+          </Field>
+          <Field label="Status" required>
+            <select
+              value={editForm.status}
+              onChange={(e) => setEditForm((f) => ({ ...f, status: e.target.value }))}
+              style={{
+                width: '100%', padding: '10px 12px', borderRadius: 8,
+                border: editErrors.status ? '1.5px solid var(--rose)' : '1.5px solid var(--border)',
+                fontSize: 14, outline: 'none',
+              }}
+            >
+              <option value="pending">Pending</option>
+              <option value="confirmed">Confirmed</option>
+              <option value="completed">Completed</option>
+              <option value="cancelled">Cancelled</option>
+            </select>
+            {editErrors.status && <div style={{ color: 'var(--rose)', fontSize: 12, marginTop: 4 }}>{editErrors.status}</div>}
+          </Field>
+          <div style={{ display: 'flex', gap: 10, justifyContent: 'flex-end', marginTop: 8 }}>
+            <Btn variant="ghost" onClick={() => { setShowEdit(false); setEditErrors({}); }} disabled={saving}>
+              Cancel
+            </Btn>
+            <Btn variant="primary" onClick={handleEdit} disabled={saving}>
+              {saving ? 'Saving...' : 'Save Changes'}
+            </Btn>
+          </div>
+        </div>
+      </Modal>
+
+      {/* Delete Confirmation Modal */}
+      <Modal open={deleteConfirm !== null} onClose={() => setDeleteConfirm(null)} title="Cancel Consultation" width={420}>
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
+          <div style={{ fontSize: 14, color: 'var(--ink2)', lineHeight: 1.5 }}>
+            Are you sure you want to cancel the consultation with <strong>{appts[deleteConfirm]?.patientName}</strong>? This action cannot be undone.
+          </div>
+          <div style={{ display: 'flex', gap: 10, justifyContent: 'flex-end' }}>
+            <Btn variant="ghost" onClick={() => setDeleteConfirm(null)} disabled={saving}>
+              Go Back
+            </Btn>
+            <Btn variant="danger" onClick={handleDelete} disabled={saving}>
+              {saving ? 'Cancelling...' : <span style={{ display: 'inline-flex', alignItems: 'center', gap: 6 }}><BinIcon size={14} color="var(--rose)" /> Cancel Consultation</span>}
+            </Btn>
+          </div>
+        </div>
+      </Modal>
 
       {/* Prescription modal */}
       <Modal open={prescModal} onClose={() => setPrescModal(false)} title="Write Prescription" width={600}>
