@@ -1,16 +1,29 @@
 {
-  "baseUrl": "http://localhost:5000",
+  "baseUrl": "http://localhost:8042",
   "endpoints": {
     "auth": {
-      "login": "/api/auth/login",
+      "login": "/users/login",
       "register": "/api/auth/register",
+      "registerOtp": "/users/registerotp",
       "logout": "/api/auth/logout",
       "me": "/api/auth/me",
       "refresh": "/api/auth/refresh",
-      "forgotPassword": "/api/auth/forgot-password",
-      "resetPassword": "/api/auth/reset-password",
+      "forgotPassword": "/users/forgototp",
+      "forgotPasswordOtp": "/users/forgototp",
+      "verifyForgotPasswordOtp": "/users/forgotverify",
+      "resetPassword": "/users/resetpassword",
       "sendOtp": "/api/auth/send-otp",
-      "verifyOtp": "/api/auth/verify-otp"
+      "verifyOtp": "/users/registerverify"
+    },
+    "users": {
+      "profile": "/users/{id}",
+      "updateProfile": "/users/{id}",
+      "doctorRequests": "/users/doctor-requests",
+      "approveDoctor": "/users/doctor-requests/{id}/approve",
+      "rejectDoctor": "/users/doctor-requests/{id}/reject",
+      "getAllDoctors": "/users/doctors",
+      "doctorAvailability": "/users/{id}/availability",
+      "bookAppointment": "/users/appointments"
     },
     "doctors": {
       "list": "/api/doctors",
@@ -20,6 +33,7 @@
       "availability": "/api/doctors/{id}/availability",
       "updateAvailability": "/api/doctors/{id}/availability",
       "updateProfile": "/api/doctors/{id}",
+      "updateStatus": "/users/{id}",
       "patients": "/api/doctors/{id}/patients"
     },
     "patients": {
@@ -62,6 +76,13 @@
       "suspendDoctor": "/api/admin/doctors/{id}/suspend",
       "activateDoctor": "/api/admin/doctors/{id}/activate",
       "deleteUser": "/api/admin/users/{id}"
+    },
+    "familyMembers": {
+      "list": "/family-members",
+      "add": "/family-members",
+      "byId": "/family-members/{id}",
+      "update": "/family-members/{id}",
+      "delete": "/family-members/delete"
     },
     "notifications": {
       "list": "/api/notifications",
